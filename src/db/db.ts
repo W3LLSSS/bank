@@ -36,7 +36,7 @@ export const getDB = async (): Promise<IDBPDatabase> => {
     if (db) return db;
   
     db = await openDB(DB_NAME, DB_VERSION, {
-      upgrade(database, oldVersion, newVersion, transaction) {
+      upgrade(database, oldVersion, _newVersion, transaction) {
         if (!database.objectStoreNames.contains('accounts')) {
           database.createObjectStore('accounts', { keyPath: 'id' });
         }
@@ -55,14 +55,6 @@ export const getDB = async (): Promise<IDBPDatabase> => {
             accountType: 'normal',
             balance: 10000,
             currency: 'EUR',
-            cards: [
-              {
-                id: 'default-card-id',
-                holderName: 'John Doe',
-                number: '1234-1234-1234-1234',
-                expiry: '12/24',
-              },
-            ],
           });
         }
       },
