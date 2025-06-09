@@ -39,7 +39,7 @@ A professional banking interface built with **React** and **TypeScript**, design
 | `accountBalance.tsx`      | Displays the user’s current account balance |
 | `accountMovement.tsx`     | Shows the account’s transaction history and handles logic |
 | `Header.tsx`              | Contains the app title and access to settings |
-| `ImportExportExcel.tsx`   | Modal component for importing and exporting .xls/.xlsx files. | (Additional: Supports exporting filtered data, e.g., export transactions sorted by description.)
+| `ImportExportExcel.tsx`   | Modal component for importing and exporting .xls/.xlsx files. (Additional: Supports exporting filtered data, e.g., export transactions sorted by description.)
 | `transferMoney.tsx`       | Modal for managing money transfers (add/edit/redo) |
 | `depositMoney.tsx`        | Modal for deposits (add/edit/redo) |
 | `types.ts`                | Type definitions and interfaces |
