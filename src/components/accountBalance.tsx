@@ -4,7 +4,12 @@ import { formatMoney } from "../functions/formatted"
 import type { Account } from "../types/account"
 
 export const AccountBalance = ({account, currency, onSelect}: {account: Account, currency: any, onSelect: (Account: Account) => void}) => {
-    const [showBalance, setShowBalance] = useState(true)
+    const [showBalance, setShowBalance] = useState(localStorage.getItem('showBalance') === 'true' || false);
+
+    const toggleBalanceVisibility = () => {
+      setShowBalance(!showBalance);
+      localStorage.setItem('showBalance', String(!showBalance));
+    };
 
     if (!account) {
       return (
@@ -49,7 +54,7 @@ export const AccountBalance = ({account, currency, onSelect}: {account: Account,
             <button
               onClick={(e) => {
                 e.stopPropagation()
-                setShowBalance(!showBalance)
+                toggleBalanceVisibility();
               }}
               className="p-2 hover:bg-emerald-200 rounded-lg transition-colors"
             >
@@ -60,7 +65,7 @@ export const AccountBalance = ({account, currency, onSelect}: {account: Account,
               )}
             </button>
             <div className="px-3 py-1 bg-white/70 rounded-lg backdrop-blur-sm">
-              <span className="text-xs font-medium text-emerald-700">****{account.accountNumber.slice(-4)}</span>
+              <span className="text-xs font-medium text-emerald-700">{!showBalance ? "••••••" + account.accountNumber.slice(-4) : account.accountNumber} </span>
             </div>
           </div>
         </div>
@@ -70,14 +75,12 @@ export const AccountBalance = ({account, currency, onSelect}: {account: Account,
             <span className="text-3xl font-bold text-emerald-900 tracking-tight">
               {showBalance ? formatMoney(account.balance, currency) : "••••••"}
             </span>
-            <span className="text-sm text-emerald-600 mt-1">Account: {showBalance ? account.accountNumber : "••••••"}</span>
           </div>
   
           <div className="flex flex-col items-end gap-1">
             <div className="px-3 py-1 bg-emerald-200 rounded-lg">
               <span className="text-xs font-bold text-emerald-800">{currency}</span>
             </div>
-            <span className="text-xs text-emerald-600">Currency</span>
           </div>
         </div>
   
