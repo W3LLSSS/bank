@@ -39,9 +39,7 @@ const TransferModal = ({ account, onClose, onTransfer, selectedTransaction , isR
     const sender = accounts[senderIndex];
     const receiver = accounts[recipientIndex];
   
-    // Si es edición, revertir saldo anterior
-    // Si es edición (pero no en modo "redo"), revertir saldo anterior
-if (selectedTransaction && !isRedo) {
+  if (selectedTransaction && !isRedo) {
   const originalRecipientIndex = accounts.findIndex(
     a => a.accountNumber === selectedTransaction.recipient
   );
@@ -57,21 +55,15 @@ if (selectedTransaction && !isRedo) {
     await saveItem("accounts", originalReceiver);
   }
 }
-
-  
-    // Aplicar nueva transferencia
     sender.balance -= amountNum;
     sender.lastBalance = sender.balance;
   
     receiver.balance += amountNum;
     receiver.lastBalance = receiver.balance;
 
-    
-    // Guardar cuentas actualizadas
     await saveItem("accounts", sender);
     await saveItem("accounts", receiver);
     
-  
     const transferDate = isRedo ? toLocalDatetimeString(new Date()) : (selectedTransaction?.date || date);
     const transferId = isRedo ? generateUUID() : (selectedTransaction?.id || generateUUID());
     const transferSendTx: any = {
@@ -102,11 +94,7 @@ if (selectedTransaction && !isRedo) {
       lastBalance: receiver.balance,
     };
     
-    await saveItem("transactions", receiveTx);
-    
-    
-    // 🔁 Usás la transacción si querés mostrarla o guardarla
-    
+    await saveItem("transactions", receiveTx);    
     onTransfer(sender);
     return onClose();
     

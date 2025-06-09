@@ -22,7 +22,6 @@ export const DepositModal = ({ account, onDeposit, onClose, selectedTransaction,
 
   useEffect(() => {
     if (selectedTransaction) {
-      console.log(isRedo)
       setAmount(selectedTransaction.amount.toFixed(2))
       setDescription(selectedTransaction.description || "")
       setDate(isRedo ? toLocalDatetimeString(new Date()) : new Date(selectedTransaction.date).toISOString().slice(0, 19))
@@ -47,23 +46,20 @@ export const DepositModal = ({ account, onDeposit, onClose, selectedTransaction,
       accountId: account.accountNumber,
       description: description || "Deposit",
       type: "deposit",
-      lastBalance: 0, // se calculará después
+      lastBalance: 0,
       date: isRedo ? toLocalDatetimeString(new Date()) : new Date(date).toISOString(),
     }
   
     if (isRedo) {
-      // Rehacer un depósito: suma el monto completo como nuevo
       newAccount.balance += depositAmount
       newTransfer.lastBalance = newAccount.balance
       newTransfer.date = toLocalDatetimeString(new Date())
     } else if (selectedTransaction) {
-      // Editar: ajustar solo la diferencia
       const diff = depositAmount - selectedTransaction.amount
       newAccount.balance += diff
       newTransfer.lastBalance = newAccount.balance
       newTransfer.date = selectedTransaction.date
     } else {
-      // Nuevo depósito
       newAccount.balance += depositAmount
       newTransfer.lastBalance = newAccount.balance
     }
@@ -84,22 +80,17 @@ export const DepositModal = ({ account, onDeposit, onClose, selectedTransaction,
         className="bg-gradient-to-br from-white to-slate-50 p-8 rounded-2xl w-full max-w-md shadow-2xl border border-white/20 relative"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-all duration-200 text-xl"
         >
           ×
         </button>
-
-        {/* Header */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-slate-800 mb-2 leading-tight">Make a Deposit</h2>
           <p className="text-slate-600 text-sm">Account: {account.accountNumber}</p>
         </div>
-
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Amount Input */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Amount</label>
             <div className="relative">
@@ -116,8 +107,6 @@ export const DepositModal = ({ account, onDeposit, onClose, selectedTransaction,
               />
             </div>
           </div>
-
-          {/* Description Input */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Description (Optional)</label>
             <input
@@ -128,8 +117,6 @@ export const DepositModal = ({ account, onDeposit, onClose, selectedTransaction,
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-all duration-200 outline-none bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
             />
           </div>
-
-          {/* Date Input */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Date</label>
             <input
@@ -139,15 +126,11 @@ export const DepositModal = ({ account, onDeposit, onClose, selectedTransaction,
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-all duration-200 outline-none bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
             />
           </div>
-
-          {/* Error Message */}
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-3">
               <p className="text-red-600 text-sm font-medium">{error}</p>
             </div>
           )}
-
-          {/* Action Buttons */}
           <div className="flex gap-3 justify-end pt-2">
             <button
               type="button"

@@ -8,8 +8,6 @@ import type { Account } from './types/account';
 import { AccountMovement } from './components/accountMovement';
 import { useCurrency } from './context/CurrencyContext';
 
-// App.tsx
-
 export default function App() {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [selectedAccount, setSelectedAccount] = useState<Account | any>(null);
@@ -25,7 +23,6 @@ export default function App() {
     const accounts = await getAccounts();
     setAccounts(accounts);
     setSelectedAccount(accounts.find(a => a.accountNumber === selectedAccount?.accountNumber));
-    console.log(accounts, selectedAccount);
   };
   
   useEffect(() => {

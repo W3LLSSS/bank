@@ -1,11 +1,10 @@
-// src/db.ts
 import { openDB, type IDBPDatabase } from 'idb';
 
 export type Transaction = {
   id: string;
   type: 'deposit' | 'withdrawal';
   amount: number;
-  date: string; // ISO string
+  date: string;
 };
 
 export type Account = {
@@ -20,7 +19,7 @@ export type Card = {
   id: string;
   holderName: string;
   number: string;
-  expiry: string; // formato MM/AA
+  expiry: string;
 };
 
 const DB_NAME = 'bankDB';
@@ -28,7 +27,6 @@ const DB_VERSION = 1;
 
 let db: IDBPDatabase | null = null;
 
-// Define stores válidos y tipo seguro
 export const STORE_NAMES = ['accounts', 'transactions', 'cards'] as const;
 export type StoreName = typeof STORE_NAMES[number];
 

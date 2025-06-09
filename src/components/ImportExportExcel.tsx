@@ -14,7 +14,6 @@ interface ExcelImporterModalProps {
 const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, onImport, onClose }) => {
   const [isDragOver, setIsDragOver] = useState(false);
 
-  // Importar Excel
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !file.name.match(/\.(xlsx|xls)$/)) {
@@ -24,7 +23,6 @@ const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, o
     processFile(file);
   };
 
-  // Procesar archivo
   const processFile = (file: File) => {
     const reader = new FileReader();
     reader.onload = (evt) => {
@@ -40,7 +38,6 @@ const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, o
     reader.readAsBinaryString(file);
   };
 
-  // Drag and Drop handlers
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(true);
@@ -66,7 +63,6 @@ const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, o
     }
   };
 
-  // Exportar Excel
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(transactions);
     const workbook = XLSX.utils.book_new();
@@ -79,20 +75,15 @@ const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, o
 
   return (
     <>
-      {/* Botón para abrir modal */}
 
-      {/* Modal */}
         <div className="fixed inset-0 z-50 overflow-y-auto">
-          {/* Overlay */}
           <div 
             className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
             onClick={() => onClose()}
           />
           
-          {/* Modal Container */}
           <div className="flex min-h-full items-center justify-center p-4">
             <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md mx-auto transform transition-all">
-              {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <h3 className="text-xl font-semibold text-gray-900">
                   Import/Export Excel
@@ -107,18 +98,14 @@ const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, o
                 </button>
               </div>
 
-              {/* Content */}
               <div className="p-6 space-y-6">
-                {/* Import Section */}
                 <div className="space-y-3">
                   <h4 className="text-lg font-medium text-gray-800 flex items-center gap-2">
                     <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
                     </svg>
                     Import Excel
-                  </h4>
-                  
-                  {/* Drag & Drop Area */}
+                  </h4>                  
                   <div
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
@@ -156,7 +143,6 @@ const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, o
                   </div>
                 </div>
 
-                {/* Divider */}
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-gray-200" />
@@ -165,8 +151,6 @@ const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, o
                     <span className="bg-white px-2 text-gray-500">o</span>
                   </div>
                 </div>
-
-                {/* Export Section */}
                 <div className="space-y-3">
                   <h4 className="text-lg font-medium text-gray-800 flex items-center gap-2">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -199,7 +183,6 @@ const ExcelImporterModal: React.FC<ExcelImporterModalProps> = ({ transactions, o
                 </div>
               </div>
 
-              {/* Footer */}
               <div className="px-6 py-4 bg-gray-50 rounded-b-2xl">
                 <button
                   onClick={() => onClose()}

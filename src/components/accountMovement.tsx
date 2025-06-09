@@ -106,10 +106,9 @@ export const AccountMovement = ({account, setAccount, currency, transactions, on
                         `}
                         onClick={async () => {
                           if (button.label === "Undo") {
-                            await getLastTransaction(account).then((tx: any) => {console.log(tx); UndoTransaction(account, tx); onRefresh();});
+                            await getLastTransaction(account).then((tx: any) => {UndoTransaction(account, tx); onRefresh();});
                           }
                           setActiveModal(button.label.toLowerCase() as any);
-                          console.log(button.label);
                         }}
                         
                         >
@@ -286,7 +285,6 @@ export const AccountMovement = ({account, setAccount, currency, transactions, on
                     onDeposit={() => {
                     setActiveModal(null);
                     onRefresh();
-                    // Opcional: actualizar estado si necesitas
                     }}
                     onClose={() => setActiveModal(null)}
                 />
@@ -297,7 +295,6 @@ export const AccountMovement = ({account, setAccount, currency, transactions, on
                     onTransfer={(updatedAccount) => {
                     setAccount(updatedAccount);
                     onRefresh();
-                    // Opcional: actualizar estado si necesitas
                     }}
                     onClose={() => setActiveModal(null)}
                 />
@@ -311,7 +308,6 @@ export const AccountMovement = ({account, setAccount, currency, transactions, on
                     onRefresh();
                     setActiveModal(null);
                     setRedo(false);
-                    // Opcional: actualizar estado si necesitas
                     }}
                     onClose={() => {setActiveModal(null); setRedo(false)}}
                 />
@@ -325,7 +321,7 @@ export const AccountMovement = ({account, setAccount, currency, transactions, on
                 setAccount(updatedAccount);
                 onRefresh();
                 setRedo(false);
-                // Opcional: actualizar estado si necesitas
+                setActiveModal(null);
                 }}
                 onClose={() => {setActiveModal(null); setRedo(false)}}
                 />
